@@ -1,49 +1,97 @@
 package com.apps.quantitymeasurement;
-
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
-class QuantityMeasurementAppTest {
+public class QuantityMeasurementAppTest {
+
+       //UC1 – FEET TEST CASES
 
     @Test
-    void testEquality_SameValue() {
-        QuantityMeasurementApp.Feet feet1 = new QuantityMeasurementApp.Feet(1.0);
-        QuantityMeasurementApp.Feet feet2 = new QuantityMeasurementApp.Feet(1.0);
-
-        assertTrue(feet1.equals(feet2),
-                "Expected two Feet objects with same value to be equal");
+    void testFeetEquality_SameValue() {
+        assertTrue(
+            QuantityMeasurementApp.checkFeetEquality(1.0, 1.0),
+            "1.0 ft should equal 1.0 ft"
+        );
     }
 
     @Test
-    void testEquality_DifferentValue() {
-        QuantityMeasurementApp.Feet feet1 = new QuantityMeasurementApp.Feet(1.0);
-        QuantityMeasurementApp.Feet feet2 = new QuantityMeasurementApp.Feet(2.0);
-
-        assertFalse(feet1.equals(feet2),
-                "Expected Feet objects with different values to be unequal");
+    void testFeetEquality_DifferentValue() {
+        assertFalse(
+            QuantityMeasurementApp.checkFeetEquality(1.0, 2.0),
+            "1.0 ft should not equal 2.0 ft"
+        );
     }
 
     @Test
-    void testEquality_NullComparison() {
-        QuantityMeasurementApp.Feet feet = new QuantityMeasurementApp.Feet(1.0);
-
-        assertFalse(feet.equals(null),
-                "Expected Feet object comparison with null to return false");
-    }
-
-    @Test
-    void testEquality_NonNumericInput() {
-        QuantityMeasurementApp.Feet feet = new QuantityMeasurementApp.Feet(1.0);
-
-        assertFalse(feet.equals("1.0"),
-                "Expected Feet object not to be equal to non-Feet object");
-    }
-
-    @Test
-    void testEquality_SameReference() {
-        QuantityMeasurementApp.Feet feet = new QuantityMeasurementApp.Feet(1.0);
+    void testFeetEquality_SameReference() {
+        QuantityMeasurementApp.Feet feet =
+                new QuantityMeasurementApp.Feet(1.0);
 
         assertTrue(feet.equals(feet),
-                "Expected Feet object to be equal to itself");
+                "Object should equal itself (Reflexive)");
+    }
+
+    @Test
+    void testFeetEquality_NullComparison() {
+        QuantityMeasurementApp.Feet feet =
+                new QuantityMeasurementApp.Feet(1.0);
+
+        assertFalse(feet.equals(null),
+                "Feet should not equal null");
+    }
+
+    @Test
+    void testFeetEquality_NonNumericInput() {
+        QuantityMeasurementApp.Feet feet =
+                new QuantityMeasurementApp.Feet(1.0);
+
+        assertFalse(feet.equals("abc"),
+                "Feet should not equal non-numeric input");
+    }
+
+       // UC2 – INCH TEST CASES
+     
+
+    @Test
+    void testInchEquality_SameValue() {
+        assertTrue(
+            QuantityMeasurementApp.checkInchesEquality(1.0, 1.0),
+            "1.0 inch should equal 1.0 inch"
+        );
+    }
+
+    @Test
+    void testInchEquality_DifferentValue() {
+        assertFalse(
+            QuantityMeasurementApp.checkInchesEquality(1.0, 2.0),
+            "1.0 inch should not equal 2.0 inch"
+        );
+    }
+
+    @Test
+    void testInchEquality_SameReference() {
+        QuantityMeasurementApp.Inches inch =
+                new QuantityMeasurementApp.Inches(1.0);
+
+        assertTrue(inch.equals(inch),
+                "Object should equal itself (Reflexive)");
+    }
+
+    @Test
+    void testInchEquality_NullComparison() {
+        QuantityMeasurementApp.Inches inch =
+                new QuantityMeasurementApp.Inches(1.0);
+
+        assertFalse(inch.equals(null),
+                "Inch should not equal null");
+    }
+
+    @Test
+    void testInchEquality_NonNumericInput() {
+        QuantityMeasurementApp.Inches inch =
+                new QuantityMeasurementApp.Inches(1.0);
+
+        assertFalse(inch.equals("xyz"),
+                "Inch should not equal non-numeric input");
     }
 }
