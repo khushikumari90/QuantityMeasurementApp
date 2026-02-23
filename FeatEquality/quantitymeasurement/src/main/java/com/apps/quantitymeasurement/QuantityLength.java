@@ -11,6 +11,9 @@ public class QuantityLength {
         if (unit == null) {
             throw new IllegalArgumentException("Unit cannot be null");
         }
+        if (!Double.isFinite(value)) {
+            throw new IllegalArgumentException("Value must be finite");
+        }
         this.value = value;
         this.unit = unit;
     }
@@ -19,9 +22,34 @@ public class QuantityLength {
         return unit.toFeet(value);
     }
 
+    public QuantityLength convertTo(LengthUnit targetUnit) {
+        if (targetUnit == null) {
+            throw new IllegalArgumentException("Target unit cannot be null");
+        }
+
+        double feetValue = valueInFeet();
+        double convertedValue = targetUnit.fromFeet(feetValue);
+
+        return new QuantityLength(convertedValue, targetUnit);
+    }
+
+    public static double convert(double value,
+                                 LengthUnit source,
+                                 LengthUnit target) {
+
+        if (source == null || target == null) {
+            throw new IllegalArgumentException("Units cannot be null");
+        }
+        if (!Double.isFinite(value)) {
+            throw new IllegalArgumentException("Value must be finite");
+        }
+
+        double feetValue = source.toFeet(value);
+        return target.fromFeet(feetValue);
+    }
+
     @Override
     public boolean equals(Object obj) {
-
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
 
@@ -32,5 +60,10 @@ public class QuantityLength {
     @Override
     public int hashCode() {
         return Objects.hash(valueInFeet());
+    }
+
+    @Override
+    public String toString() {
+        return value + " " + unit;
     }
 }
