@@ -2,34 +2,37 @@ package com.apps.quantitymeasurement;
 
 public class QuantityMeasurementApp {
 
-    public static void demonstrateLengthConversion(
-            double value,
-            LengthUnit from,
-            LengthUnit to) {
+    public static void demonstrateAddition(QuantityLength a, QuantityLength b) {
 
-        double result = QuantityLength.convert(value, from, to);
-        System.out.println(
-                "convert(" + value + ", " + from + ", " + to + ") → " + result
-        );
-    }
+        QuantityLength result = a.add(b);
 
-    public static void demonstrateLengthConversion(
-            QuantityLength length,
-            LengthUnit to) {
-
-        QuantityLength converted = length.convertTo(to);
-        System.out.println(length + " → " + converted);
+        System.out.println("add(" + a + ", " + b + ") → " + result);
     }
 
     public static void main(String[] args) {
 
-        demonstrateLengthConversion(1.0, LengthUnit.FEET, LengthUnit.INCHES);
-        demonstrateLengthConversion(3.0, LengthUnit.YARDS, LengthUnit.FEET);
-        demonstrateLengthConversion(36.0, LengthUnit.INCHES, LengthUnit.YARDS);
-        demonstrateLengthConversion(1.0, LengthUnit.CENTIMETERS, LengthUnit.INCHES);
-        demonstrateLengthConversion(0.0, LengthUnit.FEET, LengthUnit.INCHES);
+        demonstrateAddition(
+                new QuantityLength(1.0, LengthUnit.FEET),
+                new QuantityLength(2.0, LengthUnit.FEET));
 
-        QuantityLength length = new QuantityLength(1.0, LengthUnit.YARDS);
-        demonstrateLengthConversion(length, LengthUnit.INCHES);
+        demonstrateAddition(
+                new QuantityLength(1.0, LengthUnit.FEET),
+                new QuantityLength(12.0, LengthUnit.INCHES));
+
+        demonstrateAddition(
+                new QuantityLength(12.0, LengthUnit.INCHES),
+                new QuantityLength(1.0, LengthUnit.FEET));
+
+        demonstrateAddition(
+                new QuantityLength(1.0, LengthUnit.YARDS),
+                new QuantityLength(3.0, LengthUnit.FEET));
+
+        demonstrateAddition(
+                new QuantityLength(36.0, LengthUnit.INCHES),
+                new QuantityLength(1.0, LengthUnit.YARDS));
+
+        demonstrateAddition(
+                new QuantityLength(2.54, LengthUnit.CENTIMETERS),
+                new QuantityLength(1.0, LengthUnit.INCHES));
     }
 }
