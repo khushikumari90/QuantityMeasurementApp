@@ -8,12 +8,11 @@ public class QuantityLength {
     private final LengthUnit unit;
 
     public QuantityLength(double value, LengthUnit unit) {
-
         if (unit == null)
-            throw new IllegalArgumentException("Unit cannot be null");
+            throw new IllegalArgumentException();
 
-        if (!Double.isFinite(value))
-            throw new IllegalArgumentException("Invalid value");
+        if (Double.isNaN(value))
+            throw new IllegalArgumentException();
 
         this.value = value;
         this.unit = unit;
@@ -23,24 +22,15 @@ public class QuantityLength {
         return value;
     }
 
-    public LengthUnit getUnit() {
-        return unit;
-    }
-
-    /* Convert this quantity to another unit */
     public QuantityLength convertTo(LengthUnit targetUnit) {
 
-        double baseValue = unit.convertToBaseUnit(value);
-        double converted = targetUnit.convertFromBaseUnit(baseValue);
+        double base = unit.convertToBaseUnit(value);
+        double result = targetUnit.convertFromBaseUnit(base);
 
-        return new QuantityLength(converted, targetUnit);
+        return new QuantityLength(result, targetUnit);
     }
 
-    /* Addition with explicit target unit (UC7 behavior retained) */
     public QuantityLength add(QuantityLength other, LengthUnit targetUnit) {
-
-        if (other == null)
-            throw new IllegalArgumentException("Other quantity cannot be null");
 
         double base1 = unit.convertToBaseUnit(value);
         double base2 = other.unit.convertToBaseUnit(other.value);
@@ -57,24 +47,18 @@ public class QuantityLength {
 
         if (this == obj) return true;
 
-        if (obj == null || getClass() != obj.getClass())
-            return false;
+        if (!(obj instanceof QuantityLength)) return false;
 
         QuantityLength other = (QuantityLength) obj;
 
         double base1 = unit.convertToBaseUnit(value);
         double base2 = other.unit.convertToBaseUnit(other.value);
 
-        return Double.compare(base1, base2) == 0;
+        return Math.abs(base1 - base2) < 0.0001;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(unit.convertToBaseUnit(value));
-    }
-
-    @Override
-    public String toString() {
-        return "Quantity(" + value + ", " + unit + ")";
     }
 }

@@ -2,28 +2,22 @@ package com.apps.quantitymeasurement;
 
 public enum LengthUnit {
 
-    FEET(1.0),
-    INCHES(1.0 / 12.0),
-    YARDS(3.0),
-    CENTIMETERS(1.0 / 30.48);
+    INCHES(1.0 / 12),
+    FEET(1),
+    YARDS(3),
+    CENTIMETERS(0.0328084);
 
-    private final double conversionFactorToFeet;
+    private final double toFeet;
 
-    LengthUnit(double conversionFactorToFeet) {
-        this.conversionFactorToFeet = conversionFactorToFeet;
+    LengthUnit(double toFeet) {
+        this.toFeet = toFeet;
     }
 
-    public double getConversionFactor() {
-        return conversionFactorToFeet;
-    }
-
-    /* Convert value in this unit → feet (base unit) */
     public double convertToBaseUnit(double value) {
-        return value * conversionFactorToFeet;
+        return value * toFeet;
     }
 
-    /* Convert feet → this unit */
     public double convertFromBaseUnit(double baseValue) {
-        return baseValue / conversionFactorToFeet;
+        return baseValue / toFeet;
     }
 }
