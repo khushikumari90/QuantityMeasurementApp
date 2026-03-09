@@ -27,38 +27,27 @@ public class QuantityLength {
         return unit;
     }
 
-    private double valueInFeet() {
-        return unit.toFeet(value);
+    /* Convert this quantity to another unit */
+    public QuantityLength convertTo(LengthUnit targetUnit) {
+
+        double baseValue = unit.convertToBaseUnit(value);
+        double converted = targetUnit.convertFromBaseUnit(baseValue);
+
+        return new QuantityLength(converted, targetUnit);
     }
 
-    // UC6 Addition 
-    public QuantityLength add(QuantityLength other) {
+    /* Addition with explicit target unit (UC7 behavior retained) */
+    public QuantityLength add(QuantityLength other, LengthUnit targetUnit) {
 
         if (other == null)
-            throw new IllegalArgumentException("Second operand cannot be null");
+            throw new IllegalArgumentException("Other quantity cannot be null");
 
-        double sumFeet = this.valueInFeet() + other.valueInFeet();
+        double base1 = unit.convertToBaseUnit(value);
+        double base2 = other.unit.convertToBaseUnit(other.value);
 
-        double result = this.unit.fromFeet(sumFeet);
+        double sum = base1 + base2;
 
-        return new QuantityLength(result, this.unit);
-    }
-
-    // UC7 Addition with target unit 
-    public static QuantityLength add(
-            QuantityLength a,
-            QuantityLength b,
-            LengthUnit targetUnit) {
-
-        if (a == null || b == null)
-            throw new IllegalArgumentException("Operands cannot be null");
-
-        if (targetUnit == null)
-            throw new IllegalArgumentException("Target unit cannot be null");
-
-        double sumFeet = a.valueInFeet() + b.valueInFeet();
-
-        double result = targetUnit.fromFeet(sumFeet);
+        double result = targetUnit.convertFromBaseUnit(sum);
 
         return new QuantityLength(result, targetUnit);
     }
@@ -73,12 +62,15 @@ public class QuantityLength {
 
         QuantityLength other = (QuantityLength) obj;
 
-        return Double.compare(this.valueInFeet(), other.valueInFeet()) == 0;
+        double base1 = unit.convertToBaseUnit(value);
+        double base2 = other.unit.convertToBaseUnit(other.value);
+
+        return Double.compare(base1, base2) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(valueInFeet());
+        return Objects.hash(unit.convertToBaseUnit(value));
     }
 
     @Override
