@@ -2,37 +2,24 @@ package com.apps.quantitymeasurement;
 
 public class QuantityMeasurementApp {
 
-    public static void demonstrateAddition(QuantityLength a, QuantityLength b) {
-
-        QuantityLength result = a.add(b);
-
-        System.out.println("add(" + a + ", " + b + ") → " + result);
-    }
-
     public static void main(String[] args) {
 
-        demonstrateAddition(
-                new QuantityLength(1.0, LengthUnit.FEET),
-                new QuantityLength(2.0, LengthUnit.FEET));
+        QuantityLength a = new QuantityLength(1, LengthUnit.FEET);
+        QuantityLength b = new QuantityLength(12, LengthUnit.INCHES);
 
-        demonstrateAddition(
-                new QuantityLength(1.0, LengthUnit.FEET),
-                new QuantityLength(12.0, LengthUnit.INCHES));
+        System.out.println("Addition result (default unit):");
+        System.out.println(a.add(b));
 
-        demonstrateAddition(
-                new QuantityLength(12.0, LengthUnit.INCHES),
-                new QuantityLength(1.0, LengthUnit.FEET));
+        System.out.println("\nAddition result in Inches:");
+        System.out.println(
+                QuantityLength.add(a, b, LengthUnit.INCHES));
 
-        demonstrateAddition(
-                new QuantityLength(1.0, LengthUnit.YARDS),
-                new QuantityLength(3.0, LengthUnit.FEET));
+        System.out.println("\nAddition result in Yards:");
+        System.out.println(
+                QuantityLength.add(a, b, LengthUnit.YARDS));
 
-        demonstrateAddition(
-                new QuantityLength(36.0, LengthUnit.INCHES),
-                new QuantityLength(1.0, LengthUnit.YARDS));
-
-        demonstrateAddition(
-                new QuantityLength(2.54, LengthUnit.CENTIMETERS),
-                new QuantityLength(1.0, LengthUnit.INCHES));
+        System.out.println("\nAddition result in Centimeters:");
+        System.out.println(
+                QuantityLength.add(a, b, LengthUnit.CENTIMETERS));
     }
 }

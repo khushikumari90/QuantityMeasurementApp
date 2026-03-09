@@ -8,60 +8,60 @@ public class QuantityLength {
     private final LengthUnit unit;
 
     public QuantityLength(double value, LengthUnit unit) {
+
         if (unit == null)
             throw new IllegalArgumentException("Unit cannot be null");
 
         if (!Double.isFinite(value))
-            throw new IllegalArgumentException("Value must be finite");
+            throw new IllegalArgumentException("Invalid value");
 
         this.value = value;
         this.unit = unit;
-    }
-
-    private double valueInFeet() {
-        return unit.toFeet(value);
-    }
-
-    public LengthUnit getUnit() {
-        return unit;
     }
 
     public double getValue() {
         return value;
     }
 
-       //UC6 ADDITION METHODS
-       
+    public LengthUnit getUnit() {
+        return unit;
+    }
 
-    // Instance method
+    private double valueInFeet() {
+        return unit.toFeet(value);
+    }
+
+    // UC6 Addition 
     public QuantityLength add(QuantityLength other) {
 
         if (other == null)
             throw new IllegalArgumentException("Second operand cannot be null");
 
-        double sumInFeet = this.valueInFeet() + other.valueInFeet();
+        double sumFeet = this.valueInFeet() + other.valueInFeet();
 
-        double resultValue = this.unit.fromFeet(sumInFeet);
+        double result = this.unit.fromFeet(sumFeet);
 
-        return new QuantityLength(resultValue, this.unit);
+        return new QuantityLength(result, this.unit);
     }
 
-    // Static method
-    public static QuantityLength add(QuantityLength a, QuantityLength b) {
+    // UC7 Addition with target unit 
+    public static QuantityLength add(
+            QuantityLength a,
+            QuantityLength b,
+            LengthUnit targetUnit) {
 
         if (a == null || b == null)
             throw new IllegalArgumentException("Operands cannot be null");
 
-        double sumInFeet = a.valueInFeet() + b.valueInFeet();
+        if (targetUnit == null)
+            throw new IllegalArgumentException("Target unit cannot be null");
 
-        double resultValue = a.unit.fromFeet(sumInFeet);
+        double sumFeet = a.valueInFeet() + b.valueInFeet();
 
-        return new QuantityLength(resultValue, a.unit);
+        double result = targetUnit.fromFeet(sumFeet);
+
+        return new QuantityLength(result, targetUnit);
     }
-
-   
-      // UC4 Equality
-      
 
     @Override
     public boolean equals(Object obj) {

@@ -3,74 +3,85 @@ package com.apps.quantitymeasurement;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class QuantityLengthAdditionTest {
+class QuantityLengthTest {
 
     private static final double EPSILON = 1e-6;
 
     @Test
-    void testAddition_SameUnit_FeetPlusFeet() {
+    void testEquality_Feet() {
 
-        QuantityLength result =
-                new QuantityLength(1.0, LengthUnit.FEET)
-                        .add(new QuantityLength(2.0, LengthUnit.FEET));
+        QuantityLength a = new QuantityLength(1, LengthUnit.FEET);
+        QuantityLength b = new QuantityLength(1, LengthUnit.FEET);
 
-        assertEquals(new QuantityLength(3.0, LengthUnit.FEET), result);
+        assertEquals(a, b);
     }
 
     @Test
-    void testAddition_CrossUnit_FeetPlusInches() {
+    void testEquality_FeetAndInches() {
 
-        QuantityLength result =
-                new QuantityLength(1.0, LengthUnit.FEET)
-                        .add(new QuantityLength(12.0, LengthUnit.INCHES));
+        QuantityLength feet =
+                new QuantityLength(1, LengthUnit.FEET);
 
-        assertEquals(new QuantityLength(2.0, LengthUnit.FEET), result);
+        QuantityLength inches =
+                new QuantityLength(12, LengthUnit.INCHES);
+
+        assertEquals(feet, inches);
     }
 
     @Test
-    void testAddition_CrossUnit_InchPlusFeet() {
+    void testEquality_YardAndFeet() {
 
-        QuantityLength result =
-                new QuantityLength(12.0, LengthUnit.INCHES)
-                        .add(new QuantityLength(1.0, LengthUnit.FEET));
+        QuantityLength yard =
+                new QuantityLength(1, LengthUnit.YARDS);
 
-        assertEquals(new QuantityLength(24.0, LengthUnit.INCHES), result);
+        QuantityLength feet =
+                new QuantityLength(3, LengthUnit.FEET);
+
+        assertEquals(yard, feet);
     }
 
     @Test
-    void testAddition_CrossUnit_YardPlusFeet() {
+    void testAddition_FeetPlusInches() {
 
         QuantityLength result =
-                new QuantityLength(1.0, LengthUnit.YARDS)
-                        .add(new QuantityLength(3.0, LengthUnit.FEET));
+                new QuantityLength(1, LengthUnit.FEET)
+                        .add(new QuantityLength(12, LengthUnit.INCHES));
 
-        assertEquals(new QuantityLength(2.0, LengthUnit.YARDS), result);
+        assertEquals(
+                new QuantityLength(2, LengthUnit.FEET),
+                result);
     }
 
     @Test
-    void testAddition_WithZero() {
+    void testAddition_TargetUnit() {
 
         QuantityLength result =
-                new QuantityLength(5.0, LengthUnit.FEET)
-                        .add(new QuantityLength(0.0, LengthUnit.INCHES));
+                QuantityLength.add(
+                        new QuantityLength(1, LengthUnit.FEET),
+                        new QuantityLength(12, LengthUnit.INCHES),
+                        LengthUnit.INCHES);
 
-        assertEquals(new QuantityLength(5.0, LengthUnit.FEET), result);
+        assertEquals(24, result.getValue(), EPSILON);
     }
 
     @Test
-    void testAddition_NegativeValues() {
+    void testAddition_Yards() {
 
         QuantityLength result =
-                new QuantityLength(5.0, LengthUnit.FEET)
-                        .add(new QuantityLength(-2.0, LengthUnit.FEET));
+                QuantityLength.add(
+                        new QuantityLength(3, LengthUnit.FEET),
+                        new QuantityLength(3, LengthUnit.FEET),
+                        LengthUnit.YARDS);
 
-        assertEquals(new QuantityLength(3.0, LengthUnit.FEET), result);
+        assertEquals(2, result.getValue(), EPSILON);
     }
 
     @Test
-    void testAddition_NullOperand() {
+    void testNullOperand() {
 
-        assertThrows(IllegalArgumentException.class,
-                () -> new QuantityLength(1.0, LengthUnit.FEET).add(null));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new QuantityLength(1, LengthUnit.FEET)
+                        .add(null));
     }
 }
