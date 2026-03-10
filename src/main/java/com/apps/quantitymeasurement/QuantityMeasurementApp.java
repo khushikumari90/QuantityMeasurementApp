@@ -2,50 +2,55 @@ package com.apps.quantitymeasurement;
 
 public class QuantityMeasurementApp {
 
+    public static void demonstrateEquality(Quantity<?> q1, Quantity<?> q2) {
+        System.out.println(q1 + " == " + q2 + " -> " + q1.equals(q2));
+    }
+
+    public static <U extends IMeasurable> void demonstrateConversion(Quantity<U> q, U target) {
+        System.out.println(q + " -> " + q.convertTo(target));
+    }
+
+    public static <U extends IMeasurable> void demonstrateAddition(Quantity<U> q1, Quantity<U> q2, U target) {
+        System.out.println(q1 + " + " + q2 + " -> " + q1.add(q2, target));
+    }
+
     public static void main(String[] args) {
 
-        demonstrateSubtraction();
-        demonstrateDivision();
-    }
+        Quantity<LengthUnit> feet = new Quantity<>(1.0, LengthUnit.FEET);
+        Quantity<LengthUnit> inches = new Quantity<>(12.0, LengthUnit.INCHES);
 
-    private static void demonstrateSubtraction() {
+        Quantity<WeightUnit> kg = new Quantity<>(1.0, WeightUnit.KILOGRAM);
+        Quantity<WeightUnit> gram = new Quantity<>(1000.0, WeightUnit.GRAM);
 
-        System.out.println("Subtraction Operations");
+        demonstrateEquality(feet, inches);
+        demonstrateConversion(feet, LengthUnit.INCHES);
+        demonstrateAddition(feet, inches, LengthUnit.FEET);
 
-        Quantity<LengthUnit> length1 = new Quantity<>(10.0, LengthUnit.FEET);
-        Quantity<LengthUnit> length2 = new Quantity<>(6.0, LengthUnit.INCHES);
+        demonstrateEquality(kg, gram);
+        demonstrateConversion(kg, WeightUnit.GRAM);
+        demonstrateAddition(kg, gram, WeightUnit.KILOGRAM);
 
-        System.out.println(length1.subtract(length2));
-        System.out.println(length1.subtract(length2, LengthUnit.INCHES));
+        Quantity<TemperatureUnit> celsius =
+                new Quantity<>(0.0, TemperatureUnit.CELSIUS);
 
-        Quantity<WeightUnit> weight1 = new Quantity<>(10.0, WeightUnit.KILOGRAM);
-        Quantity<WeightUnit> weight2 = new Quantity<>(5000.0, WeightUnit.GRAM);
+        Quantity<TemperatureUnit> fahrenheit =
+                new Quantity<>(32.0, TemperatureUnit.FAHRENHEIT);
 
-        System.out.println(weight1.subtract(weight2));
+        demonstrateEquality(celsius, fahrenheit);
 
-        Quantity<VolumeUnit> volume1 = new Quantity<>(5.0, VolumeUnit.LITRE);
-        Quantity<VolumeUnit> volume2 = new Quantity<>(500.0, VolumeUnit.MILLILITRE);
+        demonstrateConversion(
+                new Quantity<>(100.0, TemperatureUnit.CELSIUS),
+                TemperatureUnit.FAHRENHEIT);
 
-        System.out.println(volume1.subtract(volume2));
-    }
+        demonstrateConversion(
+                new Quantity<>(273.15, TemperatureUnit.KELVIN),
+                TemperatureUnit.CELSIUS);
 
-    private static void demonstrateDivision() {
-
-        System.out.println("\nDivision Operations");
-
-        Quantity<LengthUnit> length1 = new Quantity<>(10.0, LengthUnit.FEET);
-        Quantity<LengthUnit> length2 = new Quantity<>(2.0, LengthUnit.FEET);
-
-        System.out.println(length1.divide(length2));
-
-        Quantity<WeightUnit> weight1 = new Quantity<>(10.0, WeightUnit.KILOGRAM);
-        Quantity<WeightUnit> weight2 = new Quantity<>(5.0, WeightUnit.KILOGRAM);
-
-        System.out.println(weight1.divide(weight2));
-
-        Quantity<VolumeUnit> volume1 = new Quantity<>(5.0, VolumeUnit.LITRE);
-        Quantity<VolumeUnit> volume2 = new Quantity<>(10.0, VolumeUnit.LITRE);
-
-        System.out.println(volume1.divide(volume2));
+        try {
+            new Quantity<>(100.0, TemperatureUnit.CELSIUS)
+                    .add(new Quantity<>(50.0, TemperatureUnit.CELSIUS), TemperatureUnit.CELSIUS);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
