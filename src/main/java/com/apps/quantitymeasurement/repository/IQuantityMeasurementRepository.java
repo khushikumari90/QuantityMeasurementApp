@@ -7,5 +7,9 @@ public interface IQuantityMeasurementRepository {
 
     void save(QuantityMeasurementEntity entity);
 
-    List<QuantityMeasurementEntity> getAll();
+    List<QuantityMeasurementEntity> getAllMeasurements();
+
+    int getTotalCount();
+
+    void deleteAll();
 }

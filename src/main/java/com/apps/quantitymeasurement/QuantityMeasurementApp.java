@@ -1,26 +1,22 @@
 package com.apps.quantitymeasurement;
 
-import com.apps.quantitymeasurement.controller.*;
-import com.apps.quantitymeasurement.dto.*;
-import com.apps.quantitymeasurement.service.*;
+import com.apps.quantitymeasurement.controller.QuantityMeasurementController;
+import com.apps.quantitymeasurement.repository.QuantityMeasurementDatabaseRepository;
+import com.apps.quantitymeasurement.service.QuantityMeasurementServiceImpl;
 
 public class QuantityMeasurementApp {
 
     public static void main(String[] args) {
 
-        IQuantityMeasurementService service =
-                new QuantityMeasurementServiceImpl();
+        QuantityMeasurementDatabaseRepository repository =
+                new QuantityMeasurementDatabaseRepository();
+
+        QuantityMeasurementServiceImpl service =
+                new QuantityMeasurementServiceImpl(repository);
 
         QuantityMeasurementController controller =
                 new QuantityMeasurementController(service);
 
-        QuantityDTO feet = new QuantityDTO(1,"FEET");
-        QuantityDTO inches = new QuantityDTO(12,"INCHES");
-
-        controller.compare(feet,inches);
-
-        controller.convert(feet,"INCHES");
-
-        controller.add(feet,inches,"FEET");
+        controller.compareLengths(1.0, 100.0);
     }
 }

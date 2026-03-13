@@ -1,4 +1,4 @@
-package com.apps.quantitymeasurement.dto;
+package com.apps.quantitymeasurement.entity;
 
 public class QuantityDTO {
 
@@ -10,7 +10,11 @@ public class QuantityDTO {
         this.unit = unit;
     }
 
-    public double getValue() { return value; }
+    public double getValue() {
+        return value;
+    }
 
-    public String getUnit() { return unit; }
+    public String getUnit() {
+        return unit;
+    }
 }
