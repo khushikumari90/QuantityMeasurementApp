@@ -1,0 +1,8 @@
+package com.apps.quantitymeasurement;
+
+public interface IMeasurable {
+
+    double toBaseUnit(double value);
+
+    double fromBaseUnit(double baseValue);
+}
