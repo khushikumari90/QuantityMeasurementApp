@@ -1,5 +1,4 @@
 package com.apps.quantitymeasurement.util;
-
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -13,14 +12,17 @@ public class ApplicationConfig {
                     .getClassLoader()
                     .getResourceAsStream("application.properties");
 
-            properties.load(input);
+            if (input != null) {
+                properties.load(input);
+            }
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
     public static String getProperty(String key) {
         return properties.getProperty(key);
     }
+
 }

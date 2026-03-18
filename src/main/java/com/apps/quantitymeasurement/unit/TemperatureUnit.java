@@ -1,15 +1,24 @@
 package com.apps.quantitymeasurement.unit;
 
-public enum TemperatureUnit {
+public enum TemperatureUnit implements IMeasurable {
 
-    CELSIUS,
-    FAHRENHEIT;
+    CELSIUS {
+        public double convertToBaseUnit(double value) { return value; }
+        public double convertFromBaseUnit(double value) { return value; }
+    },
 
-    public static double convert(double value, TemperatureUnit from) {
+    FAHRENHEIT {
+        public double convertToBaseUnit(double value) { return (value - 32) * 5 / 9; }
+        public double convertFromBaseUnit(double value) { return (value * 9 / 5) + 32; }
+    },
 
-        if (from == CELSIUS)
-            return value;
+    KELVIN {
+        public double convertToBaseUnit(double value) { return value - 273.15; }
+        public double convertFromBaseUnit(double value) { return value + 273.15; }
+    };
 
-        return (value - 32) * 5 / 9;
+    @Override
+    public void validateOperationSupport(String operation) {
+        throw new UnsupportedOperationException("Temperature does not support " + operation);
     }
 }

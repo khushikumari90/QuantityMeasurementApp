@@ -1,18 +1,22 @@
 package com.apps.quantitymeasurement.unit;
-
 public enum VolumeUnit implements IMeasurable {
 
-    LITER(1000),
-    ML(1);
+    LITRE(1.0),
+    MILLILITRE(0.001);
 
-    private final double factor;
+    private final double conversionFactor;
 
     VolumeUnit(double factor) {
-        this.factor = factor;
+        this.conversionFactor = factor;
     }
 
     @Override
-    public double toBase(double value) {
-        return value * factor;
+    public double convertToBaseUnit(double value) {
+        return value * conversionFactor;
+    }
+
+    @Override
+    public double convertFromBaseUnit(double value) {
+        return value / conversionFactor;
     }
 }

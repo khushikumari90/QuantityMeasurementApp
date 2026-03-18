@@ -1,17 +1,19 @@
-CREATE TABLE IF NOT EXISTS quantity_measurement (
+CREATE TABLE IF NOT EXISTS quantity_measurement_entity (
 
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
 
-    type VARCHAR(50),
+    operation_type VARCHAR(50),
+    measurement_type VARCHAR(50),
 
-    operation VARCHAR(50),
+    value1 DOUBLE,
+    value2 DOUBLE,
 
-    value1 VARCHAR(50),
+    unit1 VARCHAR(20),
+    unit2 VARCHAR(20),
 
-    value2 VARCHAR(50),
+    result DOUBLE,
 
-    result BOOLEAN,
+    error BOOLEAN,
 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

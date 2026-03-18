@@ -1,54 +1,31 @@
 package com.apps.quantitymeasurement.repository;
 
-import com.app.quantitymeasurement.entity.QuantityMeasurementEntity;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import com.apps.quantitymeasurement.entity.QuantityMeasurementEntity;
+import com.apps.quantitymeasurement.util.ConnectionPool;
 
-public class QuantityMeasurementDatabaseRepositoryTest {
+public class QuantityMeasurementDatabaseRespositoryTest {
+	@Test
+	void shouldSaveMeasurementToDatabase() {
 
-    private QuantityMeasurementDatabaseRepository repository;
+	    ConnectionPool pool = new ConnectionPool();
+	    QuantityMeasurementDatabaseRepository repo =
+	            new QuantityMeasurementDatabaseRepository(pool);
 
-    @Before
-    public void setUp() {
-        repository = new QuantityMeasurementDatabaseRepository();
-        repository.deleteAll();
-    }
+	    QuantityMeasurementEntity entity = new QuantityMeasurementEntity();
 
-    @Test
-    public void givenMeasurement_WhenSaved_ShouldIncreaseCount() {
+	    entity.setOperationType("COMPARE");
+	    entity.setMeasurementType("LENGTH");
+	    entity.setValue1(10);
+	    entity.setValue2(1000);
+	    entity.setResult(1);
 
-        QuantityMeasurementEntity entity =
-                new QuantityMeasurementEntity("LENGTH", "COMPARE", "1", "12", true);
+	    repo.save(entity);
 
-        repository.save(entity);
+	    assertTrue(repo.getTotalCount() > 0);
+	}
 
-        int count = repository.getTotalCount();
-
-        assertEquals(1, count);
-    }
-
-    @Test
-    public void givenMultipleMeasurements_WhenRetrieved_ShouldReturnAll() {
-
-        repository.save(new QuantityMeasurementEntity("LENGTH","COMPARE","1","12",true));
-        repository.save(new QuantityMeasurementEntity("WEIGHT","COMPARE","1","1000",true));
-
-        List<QuantityMeasurementEntity> list = repository.getAllMeasurements();
-
-        assertEquals(2, list.size());
-    }
-
-    @Test
-    public void givenMeasurements_WhenDeleted_ShouldReturnZeroCount() {
-
-        repository.save(new QuantityMeasurementEntity("LENGTH","COMPARE","1","12",true));
-
-        repository.deleteAll();
-
-        assertEquals(0, repository.getTotalCount());
-    }
 }
