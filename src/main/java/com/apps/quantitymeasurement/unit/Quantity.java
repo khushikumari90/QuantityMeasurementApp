@@ -1,3 +1,4 @@
+
 package com.apps.quantitymeasurement.unit;
 
 import java.util.Objects;
@@ -101,4 +102,6 @@ public class Quantity<U extends IMeasurable> {
     }
 
     public U getUnit(){ return unit; }
+
+	
 }
