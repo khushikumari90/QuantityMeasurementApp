@@ -1,7 +1,8 @@
-# QuantityMeasurementApp
+# 📏 QuantityMeasurementApp
 
 ## 🌿 Branch Structure
 
+```bash
 dev
 └── main
     └── feature/UC1-FeatEquality
@@ -22,40 +23,44 @@ dev
                                                                 └── feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence
                                                                     └── feature/UC17-Spring-Backend
                                                                         └── feature/UC18-Google-Authentication-and-User-Management-for-Quantity-Measurement
+```
 
-Measurement
-📌 Use Cases Implemented
-🔹 Basic Features
-UC1 – Feet Equality: Compare two values in feet
-UC2 – Feet & Inches Equality: Compare values with different units (1 ft = 12 inches)
-UC3 – Generic Quantity (DRY): Reusable class to eliminate duplicate logic
-UC4 – Extended Unit Support: Added units like feet, inches, yard, cm
-UC5 – Unit Conversion: Convert between units (ft ↔ inches, cm, yard)
-🔹 Arithmetic Operations
-UC6 – Addition of Length Units: Add two quantities
-UC7 – Target Unit Addition: Return result in desired unit
-UC8 – Refactoring Unit Enum: Improved code structure
-UC12 – Subtraction & Division: Perform arithmetic operations
-UC13 – Centralized Arithmetic Logic: DRY-based common logic
-🔹 Advanced Measurements
-UC9 – Weight Measurement: Support for kg, gram
-UC10 – Multi-Category Support: Length, weight, volume
-UC11 – Volume Equality: Compare volume units
-UC14 – Temperature Measurement: Special handling with limited operations
-🔹 Architecture & Backend
-UC15 – N-Tier Architecture: Controller, Service, Repository layers
-UC16 – JDBC Integration: Database persistence
-UC17 – Spring Backend: REST APIs using Spring Boot
-🔐 Security
-UC18 – Authentication & User Management:
-Spring Security with JWT & OAuth2 (Google Login)
-📖 Project Overview
+## 📌 Use Cases Implemented
 
-This project is a Quantity Measurement Application that provides:
+### 🔹 Basic Features
+- UC1 – Feet Equality  
+- UC2 – Feet & Inches Equality  
+- UC3 – Generic Quantity (DRY)  
+- UC4 – Extended Unit Support  
+- UC5 – Unit Conversion  
 
-✅ Unit comparison and conversion
-✅ Arithmetic operations on measurements
-✅ Multi-category support (length, weight, volume, temperature)
-✅ Database integration using JDBC
-✅ RESTful APIs with Spring Boot
-✅ Secure authentication using JWT & OAuth2
+### 🔹 Arithmetic Operations
+- UC6 – Addition  
+- UC7 – Target Unit Addition  
+- UC8 – Refactoring  
+- UC12 – Subtraction & Division  
+- UC13 – Centralized Logic  
+
+### 🔹 Advanced Measurements
+- UC9 – Weight  
+- UC10 – Multi-Category  
+- UC11 – Volume  
+- UC14 – Temperature  
+
+### 🔹 Architecture & Backend
+- UC15 – N-Tier  
+- UC16 – JDBC  
+- UC17 – Spring Boot  
+
+### 🔐 Security
+- UC18 – JWT + OAuth2 (Google Login)
+
+## 📖 Project Overview
+
+This project provides:
+- Unit conversion  
+- Arithmetic operations  
+- Multi-category measurement  
+- JDBC database integration  
+- Spring Boot APIs  
+- Secure authentication (JWT + OAuth2)
