@@ -1,10 +1,20 @@
-
 package com.apps.quantitymeasurement.service;
-import com.apps.quantitymeasurement.entity.*;
-import com.apps.quantitymeasurement.unit.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Service;
+
+import com.apps.quantitymeasurement.model.QuantityMeasurementEntity;
+import com.apps.quantitymeasurement.repository.QuantityMeasurementRepository;
+import com.apps.quantitymeasurement.unit.IMeasurable;
+import com.apps.quantitymeasurement.unit.Quantity;
 
 @SuppressWarnings("unchecked")
+@Service
 public class QuantityMeasurementServiceImpl implements IQuantityMeasurementService {
+
+    @Autowired
+    private QuantityMeasurementRepository repository;
 
     @Override
     public QuantityMeasurementEntity compare(Quantity<?> q1, Quantity<?> q2) {
@@ -12,14 +22,14 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
         try {
             boolean result = q1.equals(q2);
 
-            return new QuantityMeasurementEntity(
+            return repository.save(new QuantityMeasurementEntity(
                     "COMPARE",
                     q1.toString(),
                     q2.toString(),
-                    String.valueOf(result));
+                    String.valueOf(result)));
 
         } catch (Exception e) {
-            return new QuantityMeasurementEntity(e.getMessage());
+            return repository.save(new QuantityMeasurementEntity(e.getMessage()));
         }
     }
 
@@ -27,15 +37,18 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
     public QuantityMeasurementEntity convert(Quantity<?> quantity, Object targetUnit) {
 
         try {
-            Quantity result = ((Quantity) quantity).convertTo((IMeasurable) targetUnit);
+            Quantity<IMeasurable> q = (Quantity<IMeasurable>) quantity;
+            Quantity<?> result = q.convertTo(((Quantity<?>) targetUnit).getUnit());
 
-            return new QuantityMeasurementEntity(
-                    "CONVERT",
-                    quantity.toString(),
-                    result.toString());
+            return repository.save(new QuantityMeasurementEntity(
+                "CONVERT", 
+                quantity.toString(),
+                null,
+                result.toString()
+            ));
 
         } catch (Exception e) {
-            return new QuantityMeasurementEntity(e.getMessage());
+            return repository.save(new QuantityMeasurementEntity(e.getMessage()));
         }
     }
 
@@ -45,50 +58,48 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
         try {
             Quantity result = ((Quantity) q1).add((Quantity) q2);
 
-            return new QuantityMeasurementEntity(
+            return repository.save(new QuantityMeasurementEntity(
                     "ADD",
                     q1.toString(),
                     q2.toString(),
-                    result.toString());
+                    result.toString()));
 
         } catch (Exception e) {
-            return new QuantityMeasurementEntity(e.getMessage());
+            return repository.save(new QuantityMeasurementEntity(e.getMessage()));
         }
     }
 
     @Override
-    public QuantityMeasurementEntity subtract(Quantity<?> q1,
-                                              Quantity<?> q2) {
+    public QuantityMeasurementEntity subtract(Quantity<?> q1, Quantity<?> q2) {
 
         try {
             Quantity result = ((Quantity) q1).subtract((Quantity) q2);
 
-            return new QuantityMeasurementEntity(
+            return repository.save(new QuantityMeasurementEntity(
                     "SUBTRACT",
                     q1.toString(),
                     q2.toString(),
-                    result.toString());
+                    result.toString()));
 
         } catch (Exception e) {
-            return new QuantityMeasurementEntity(e.getMessage());
+            return repository.save(new QuantityMeasurementEntity(e.getMessage()));
         }
     }
 
     @Override
-    public QuantityMeasurementEntity divide(Quantity<?> q1,
-                                            Quantity<?> q2) {
+    public QuantityMeasurementEntity divide(Quantity<?> q1, Quantity<?> q2) {
 
         try {
             double result = ((Quantity) q1).divide((Quantity) q2);
 
-            return new QuantityMeasurementEntity(
+            return repository.save(new QuantityMeasurementEntity(
                     "DIVIDE",
                     q1.toString(),
                     q2.toString(),
-                    String.valueOf(result));
+                    String.valueOf(result)));
 
         } catch (Exception e) {
-            return new QuantityMeasurementEntity(e.getMessage());
+            return repository.save(new QuantityMeasurementEntity(e.getMessage()));
         }
     }
 }

@@ -1,4 +1,5 @@
 package com.apps.quantitymeasurement.unit;
+
 @FunctionalInterface
 interface SupportsArithmetic {
     boolean isSupported();

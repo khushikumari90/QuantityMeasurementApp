@@ -36,17 +36,10 @@ public class Quantity<U extends IMeasurable> {
     }
 
     public Quantity<U> convertTo(U targetUnit){
-        if(targetUnit == null){ throw new IllegalArgumentException("Target unit cannot be null!");}
-        double base = this.toBaseValue();
-        double converted = targetUnit.convertFromBase(base);
-        double rounded = Math.round(converted * 100.0)/ 100.0;
-
-        return new Quantity<>(rounded, targetUnit);
+        return createQuantityFromBase(this.toBaseValue(), targetUnit);
     }
 
-    public Quantity<U> add(Quantity<U> other){
-        return add(other, this.unit);
-    }
+    public Quantity<U> add(Quantity<U> other){ return add(other, this.unit); }
 
     public Quantity<U> add(Quantity<U> other, U targetUnit){
         double sum = operations(other, ArithmeticOperations.ADD);
@@ -106,4 +99,8 @@ public class Quantity<U extends IMeasurable> {
     public String toString(){
         return String.format("%.2f %s", value, unit.getUnitName());
     }
+
+    public U getUnit(){ return unit; }
+
+	
 }
