@@ -27,33 +27,59 @@ dev
 
 ## 📌 Use Cases Implemented
 
-### 🔹 Basic Features
-- UC1 – Feet Equality  
-- UC2 – Feet & Inches Equality  
-- UC3 – Generic Quantity (DRY)  
-- UC4 – Extended Unit Support  
-- UC5 – Unit Conversion  
+### UC1 – Feet Equality
+Compare two values in feet for equality.
 
-### 🔹 Arithmetic Operations
-- UC6 – Addition  
-- UC7 – Target Unit Addition  
-- UC8 – Refactoring  
-- UC12 – Subtraction & Division  
-- UC13 – Centralized Logic  
+### UC2 – Feet & Inches Equality
+Compare values with different units (1 ft = 12 inches).
 
-### 🔹 Advanced Measurements
-- UC9 – Weight  
-- UC10 – Multi-Category  
-- UC11 – Volume  
-- UC14 – Temperature  
+### UC3 – Generic Quantity (DRY)
+Created reusable class to remove duplicate logic.
 
-### 🔹 Architecture & Backend
-- UC15 – N-Tier  
-- UC16 – JDBC  
-- UC17 – Spring Boot  
+### UC4 – Extended Unit Support
+Added units like feet, inches, yard, cm.
 
-### 🔐 Security
-- UC18 – JWT + OAuth2 (Google Login)
+### UC5 – Unit Conversion
+Convert between units (ft ↔ inches, cm, yard).
+
+### UC6 – Addition of Length Units
+Add two quantities with same/different units.
+
+### UC7 – Target Unit Addition
+Add and return result in desired unit.
+
+### UC8 – Refactoring Unit Enum
+Improved design by separating unit logic.
+
+### UC9 – Weight Measurement
+Added support for weight units (kg, gram).
+
+### UC10 – Multi-Category Generic Class
+Supports multiple categories (length, weight, volume).
+
+### UC11 – Volume Equality
+Compare volume units (liters, ml).
+
+### UC12 – Subtraction & Division
+Perform arithmetic operations on quantities.
+
+### UC13 – Centralized Arithmetic Logic
+Single logic to enforce DRY across operations.
+
+### UC14 – Temperature Measurement
+Handle temperature with restricted operations.
+
+### UC15 – N-Tier Architecture
+Structured into controller, service, repository layers.
+
+### UC16 – JDBC Database Integration
+Store and retrieve data using JDBC.
+
+### UC17 – Spring Backend
+Built REST APIs using Spring Boot.
+
+### UC18 – Authentication & User Management
+Implemented Spring Security with JWT & OAuth2 (Google Login).
 
 ## 📖 Project Overview
 
