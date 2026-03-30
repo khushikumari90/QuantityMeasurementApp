@@ -50,6 +50,6 @@ public class QuantityMeasurementController {
         Quantity<?> q1 = getQ1(input);
         Quantity<?> q2 = getQ2(input);
 
-        return service.convert(q1, q2.getUnit()); // 🔥 correct fix
+        return service.convert(q1, q2.getUnit()); 
     }
 }
