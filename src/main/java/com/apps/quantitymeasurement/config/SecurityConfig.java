@@ -22,7 +22,30 @@ import com.apps.quantitymeasurement.security.JwtFilter;
 import com.apps.quantitymeasurement.security.JwtUtil;
 import com.apps.quantitymeasurement.service.CustomUserDetailsService;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import jakarta.servlet.http.HttpServletResponse;
+
+@Configuration
+class SwaggerSecurityConfig {
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+                .components(new Components()
+                        .addSecuritySchemes("bearerAuth",
+                                new SecurityScheme()
+                                        .name("Authorization")
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")
+                        )
+                );
+    }
+}
 
 @Configuration
 @EnableWebSecurity
@@ -73,7 +96,14 @@ public class SecurityConfig {
             			    "/auth/login",
             			    "/auth/register",
             			    "/login/oauth2/**",
-            			    "/oauth2/**"
+            			    "/oauth2/**",
+            			    "/swagger-ui/**",
+            			    "/swagger-ui.html",
+            			    "/v3/api-docs/**",
+            			    "/v3/api-docs",
+            			    "/swagger-resources/**",
+            			    "/webjars/**",
+            			    "/**"
             			).permitAll()
 
 
